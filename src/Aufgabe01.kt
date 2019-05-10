@@ -57,6 +57,17 @@ class Parkhaus {
         }
         return true
     }
+
+    fun getParkscheinAnzahlUm(uhrzeit: Uhrzeit) : Int{
+        var anzahl = 0
+        for (p in parkscheine) {
+            if (uhrzeit.std*60+uhrzeit.min >= p.einfahrtZeit.std*60+p.einfahrtZeit.min &&
+                uhrzeit.std*60+uhrzeit.min <= p.ausfahrtZeit.std*60+p.ausfahrtZeit.min) {
+                anzahl++
+            }
+        }
+        return anzahl
+    }
 }
 
 fun main() {
@@ -67,6 +78,8 @@ fun main() {
     val u1700 = Uhrzeit(17,0)
     val u1830 = Uhrzeit(18,30)
     val u1910 = Uhrzeit(19,10)
+
+    val u1800 = Uhrzeit(18,0)
 
     // Parkscheine erstellen
     val p1 = Parkschein(u1515, u1600)
@@ -84,6 +97,9 @@ fun main() {
     gummersbach.parkscheine.add(p3)
     gummersbach.parkscheine.add(p4)
     gummersbach.parkscheine.add(p5)
+
+    var summe = gummersbach.getParkscheinAnzahlUm(u1800)
+    println("Die Anzahl der Parkscheine für die Uhrzeit ist : $summe")
 
     println("Kürzeste Parkzeit: ${gummersbach.kuerzesteParkzeit()}")
     println("Durchschnittliche Parkzeit: ${gummersbach.durchschnittlicheParkzeit()}")
